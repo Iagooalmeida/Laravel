@@ -53,4 +53,4 @@ Siga os passos abaixo para instalar e configurar o projeto:
     ```bash  
     php artisan serve
 
-Agora você pode acessar o projeto em [<http://localhost:8000](http://localhost:8000)>. ```
+Agora você pode acessar o projeto em <http://localhost:8000>.
