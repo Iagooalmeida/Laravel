@@ -25,20 +25,28 @@
 
 @isset($fornecedores)
 
-    Fornecedor: {{ $fornecedores[1]['nome'] }}<br>
-    Status: {{ $fornecedores[1]['status'] }}<br>
-    <!-- $variavel ?? '' => Se a variável não existir, não dá erro, apenas exibe vazio -->
-    CNPJ: {{ $fornecedores[1]['cnpj'] ?? 'Dados não preenchidos' }}<br>
+    @for ($i = 0; isset($fornecedores[$i]); $i++)
+        Fornecedor: {{ $fornecedores[$i]['nome'] }}<br>
+        Status: {{ $fornecedores[$i]['status'] }}<br>
+        <!-- $variavel ?? '' => Se a variável não existir, não dá erro, apenas exibe vazio -->
+        CNPJ: {{ $fornecedores[$i]['cnpj'] ?? 'Dados não preenchidos' }}<br>
 
-    {{-- @isset($fornecedores[0]['cnpj'])
-        CNPJ: {{ $fornecedores[0]['cnpj'] }}<br>
-        @empty($fornecedores[0]['cnpj'])
-            O campo CNPJ não foi preenchido
-        @endempty
-    @endisset --}}
+        {{-- @isset($fornecedores[0]['cnpj'])
+            CNPJ: {{ $fornecedores[0]['cnpj'] }}<br>
+            @empty($fornecedores[0]['cnpj'])
+                O campo CNPJ não foi preenchido
+            @endempty
+        @endisset --}}
 
-    Telefone: {{ $fornecedores[1]['ddd'] ?? '' }} {{ $fornecedores[1]['telefone']  ?? '' }}<br>
-    @switch($fornecedores[1]['ddd'])
+        Telefone: {{ $fornecedores[$i]['ddd'] ?? '' }} {{ $fornecedores[$i]['telefone']  ?? '' }}<br>
+        <hr>
+    @endfor
+
+@endisset
+
+{{-- Blade switch case --}}
+{{-- @isset($fornecedores)
+    @switch($fornecedores[0]['ddd'])
         @case('11')
             São Paulo - SP
             @break
@@ -50,13 +58,69 @@
             @break
         @default
             Estado não identificado
-
     @endswitch
-    <br>
+@endisset --}}
 
 
-    E-mail: {{ $fornecedores[1]['email'] ?? ''}}<br>
+{{-- Blade While --}}
+{{-- @isset($fornecedores)
+    @php
+        $i = 0;
+    @endphp
+    @while (isset($fornecedores[$i]))
+        Fornecedor: {{ $fornecedores[$i]['nome'] }}<br>
+        Status: {{ $fornecedores[$i]['status'] }}<br>
+        CNPJ: {{ $fornecedores[$i]['cnpj'] ?? 'Dados não preenchidos' }}<br>
+        Telefone: {{ $fornecedores[$i]['ddd'] ?? '' }} {{ $fornecedores[$i]['telefone']  ?? '' }}<br>
+        <hr>
+        @php
+            $i++;
+        @endphp
+    @endwhile
+@endisset --}}
+{{-- Fim do while --}}
 
-@endisset
+{{-- Blade Foreach --}}
+{{-- @isset($fornecedores)
+    @foreach ($fornecedores as $indice => $fornecedor)
+        Fornecedor: {{ $fornecedor['nome'] }}<br>
+        Status: {{ $fornecedor['status'] }}<br>
+        CNPJ: {{ $fornecedor['cnpj'] ?? 'Dados não preenchidos' }}<br>
+        Telefone: {{ $fornecedor['ddd'] ?? '' }} {{ $fornecedor['telefone']  ?? '' }}<br>
+        <hr>
+    @endforeach
+@endisset --}}
 
+{{-- Blade Forelse --}}
+{{-- @isset($fornecedores)
+    @forelse ($fornecedores as $indice => $fornecedor)
+        Fornecedor: {{ $fornecedor['nome'] }}<br>
+        Status: {{ $fornecedor['status'] }}<br>
+        CNPJ: {{ $fornecedor['cnpj'] ?? 'Dados não preenchidos' }}<br>
+        Telefone: {{ $fornecedor['ddd'] ?? '' }} {{ $fornecedor['telefone']  ?? '' }}<br>
+        <hr>
+    @empty
+        <h3>Não existem fornecedores cadastrados</h3>
+    @endforelse
+@endisset --}}
 
+{{-- Blade variavel loop --}}
+{{-- @isset($fornecedores)
+    @foreach ($fornecedores as $indice => $fornecedor)
+        Iteração: {{ $loop->iteration }}<br>
+        Fornecedor: {{ $fornecedor['nome'] }}<br>
+        Status: {{ $fornecedor['status'] }}<br>
+        CNPJ: {{ $fornecedor['cnpj'] ?? 'Dados não preenchidos' }}<br>
+        Telefone: {{ $fornecedor['ddd'] ?? '' }} {{ $fornecedor['telefone']  ?? '' }}<br>
+        @if ($loop->first)
+            Primeira iteração<br>
+        @endif
+        @if ($loop->last)
+            Última iteração<br>
+
+            <br>
+            Total de registros: {{ $loop->count }}<br>
+        @endif
+        <hr>
+    @endforeach
+@endisset --}}
