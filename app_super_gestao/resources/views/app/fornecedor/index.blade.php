@@ -25,13 +25,37 @@
 
 @isset($fornecedores)
 
-    fornecedor: {{ $fornecedores[1]['nome'] }}<br>
+    Fornecedor: {{ $fornecedores[1]['nome'] }}<br>
     Status: {{ $fornecedores[1]['status'] }}<br>
-    @isset($fornecedores[1]['cnpj'])
-        CNPJ: {{ $fornecedores[1]['cnpj'] }}<br>
-    @endisset
-    {{-- Telefone: {{ $fornecedores[0]['ddd'] }} {{ $fornecedores[0]['telefone'] }}<br>
-    E-mail: {{ $fornecedores[0]['email'] }}<br> --}}
+    <!-- $variavel ?? '' => Se a variável não existir, não dá erro, apenas exibe vazio -->
+    CNPJ: {{ $fornecedores[1]['cnpj'] ?? 'Dados não preenchidos' }}<br>
+
+    {{-- @isset($fornecedores[0]['cnpj'])
+        CNPJ: {{ $fornecedores[0]['cnpj'] }}<br>
+        @empty($fornecedores[0]['cnpj'])
+            O campo CNPJ não foi preenchido
+        @endempty
+    @endisset --}}
+
+    Telefone: {{ $fornecedores[1]['ddd'] ?? '' }} {{ $fornecedores[1]['telefone']  ?? '' }}<br>
+    @switch($fornecedores[1]['ddd'])
+        @case('11')
+            São Paulo - SP
+            @break
+        @case('32')
+            Juiz de Fora - MG
+            @break
+        @case('85')
+            Fortaleza - CE
+            @break
+        @default
+            Estado não identificado
+
+    @endswitch
+    <br>
+
+
+    E-mail: {{ $fornecedores[1]['email'] ?? ''}}<br>
 
 @endisset
 
