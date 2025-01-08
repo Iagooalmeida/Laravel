@@ -17,8 +17,8 @@ return new class extends Migration
             $table->text('descricao')->nullable();
             $table->float('peso', 8, 2)->nullable();
             $table->float('preco_venda', 8, 2)->default(0.01);
-            $table->integer('estoque-minimo')->default(1);
-            $table->integer('estoque-maximo')->default(1);
+            $table->integer('estoque_minimo')->default(1);
+            $table->integer('estoque_maximo')->default(1);
             $table->timestamps();
         });
     }
