@@ -13,15 +13,12 @@
     <select name="motivo-contato" class="{{ $classe }}">
         <option value="">Qual o motivo do contato?</option>
         @foreach($motivo_contatos as $key => $motivo_contato)
-            <option value="{{ $key }}" {{ old('motivo_contato') == $key ? 'selected' : '' }}>{{ $motivo_contato }}</option>
+            <option value="{{ $motivo_contato->id }}" {{ old('motivo_contato') == $motivo_contato->id ? 'selected' : '' }}>{{ $motivo_contato->motivo_contato }}</option>
         @endforeach
     </select>
     <br>
     <textarea name="mensagem" class="{{ $classe }}">
-        @if(old('mensagem'))
-            {{ old('mensagem') }}
-        @else Preencha aqui a sua mensagem
-        @endif
+        {{ old('mensagem') ? old('mensagem') : 'Preencha aqui a sua mensagem' }}
     </textarea>
     <br>
     <button type="submit" class="{{ $classe }}">ENVIAR</button>
