@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\LogAcessoMiddleware;
 
 
-Route::get('/', 'App\Http\Controllers\PrincipalControler@principal')->name('site.index');
+Route::middleware(LogAcessoMiddleware::class)
+    ->get('/', 'App\Http\Controllers\PrincipalControler@principal')
+    ->name('site.index')
+    ->middleware(LogAcessoMiddleware::class);
 
 Route::get('/sobre-nos', 'App\Http\Controllers\SobreNosControler@sobreNos')->name('site.sobrenos');
 
