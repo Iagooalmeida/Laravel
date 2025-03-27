@@ -25,6 +25,10 @@ class LogAcessoMiddleware
             'log' => "IP $ip requisitou a rota $rota"
         ]);
 
-        return $next($request);
+        //return $next($request);
+        $resposta = $next($request);
+        $resposta->setStatusCode(201, 'O estatus e o texto da resposta foram alterados');
+
+        return $resposta;
     }
 }
