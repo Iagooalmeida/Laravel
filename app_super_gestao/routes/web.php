@@ -20,7 +20,7 @@ Route::get('/login', function() {
     return 'Login';
 })->name('site.login');
 
-Route::middleware('autenticacao')->prefix('/app')->group(function() {
+Route::middleware('autenticacao:Padrao,Visitante')->prefix('/app')->group(function() {
     Route::
         get('/clientes', function() { return 'Clientes'; })
         ->name('app.clientes');
