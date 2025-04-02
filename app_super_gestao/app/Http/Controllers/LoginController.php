@@ -14,6 +14,10 @@ class LoginController extends Controller
         if($request->get('erro') == 1){
             $erro = "Usuário e senha não conferem!";
         }
+
+        if($request->get('erro') == 2){
+            $erro = "Necessário realizar login para acessar a página!";
+        }
         return view('site.login', ['titulo' => 'Login', 'erro' => $erro]);
     }
 
@@ -51,8 +55,8 @@ class LoginController extends Controller
             session_start();
             $_SESSION['usuario'] = $usuario->name;
             $_SESSION['email'] = $usuario->email;
-            $_SESSION['id'] = $usuario->id;
-            $_SESSION['perfil'] = $usuario->perfil;
+            // $_SESSION['id'] = $usuario->id;
+            // $_SESSION['perfil'] = $usuario->perfil;
 
             return redirect()->route('app.home');
         }else{
@@ -60,5 +64,11 @@ class LoginController extends Controller
             // Redirecionar para a página de login com erro
             return redirect()->route('site.login', ['erro' => 1]);
         }
+    }
+
+    public function sair(){
+        // Limpar a sessão
+        session_destroy();
+        return redirect()->route('site.index');
     }
 }

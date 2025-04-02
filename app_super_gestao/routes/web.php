@@ -20,15 +20,16 @@ Route::get('/login/{erro?}', 'App\http\Controllers\LoginController@index')->name
 Route::post('/login', 'App\http\Controllers\LoginController@login')->name('site.login');
 
 Route::middleware('autenticacao:Padrao,Visitante')->prefix('/app')->group(function() {
-    Route::
-        get('/clientes', function() { return 'Clientes'; })
-        ->name('app.clientes');
 
-    Route::get('/fornecedores', 'App\http\Controllers\FornecedorController@index')
-        ->name('app.fornecedores');
+    Route::get('/home', 'App\http\Controllers\HomeController@index')->name('app.home');
 
-    Route::get('/produtos', function() { return 'Produtos'; })
-        ->name('app.produtos');
+    Route::get('/sair', 'App\http\Controllers\LoginController@sair')->name('app.sair');
+
+    Route::get('/cliente', 'App\http\Controllers\ClienteController@index')->name('app.cliente');
+
+    Route::get('/fornecedor', 'App\http\Controllers\FornecedorController@index')->name('app.fornecedor');
+
+    Route::get('/produto', 'App\http\Controllers\ProdutoController@index')->name('app.produto');
 });
 
 Route::get('/teste/{p1}/{p2}', 'App\http\Controllers\TesteControler@teste')->name('teste');
