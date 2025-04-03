@@ -28,6 +28,8 @@ Route::middleware('autenticacao:Padrao,Visitante')->prefix('/app')->group(functi
     Route::get('/cliente', 'App\http\Controllers\ClienteController@index')->name('app.cliente');
 
     Route::get('/fornecedor', 'App\http\Controllers\FornecedorController@index')->name('app.fornecedor');
+    Route::post('/fornecedor/listar', 'App\http\Controllers\FornecedorController@listar')->name('app.fornecedor.listar');
+    Route::get('/fornecedor/adicionar', 'App\http\Controllers\FornecedorController@adicionar')->name('app.fornecedor.adicionar');
 
     Route::get('/produto', 'App\http\Controllers\ProdutoController@index')->name('app.produto');
 });
