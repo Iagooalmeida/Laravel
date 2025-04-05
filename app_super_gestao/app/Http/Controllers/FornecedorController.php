@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Fornecedor;
 
 class FornecedorController extends Controller
 {
@@ -10,40 +11,68 @@ class FornecedorController extends Controller
 
         return view('app.fornecedor.index');
 
-        // $fornecedores = [
-        //     0 => [
-        //         'nome' => 'Fornecedor 1',
-        //         'status' => 'N',
-        //         'cnpj' => '00.000.000/0000-00',
-        //         'ddd' => '11', // São Paulo - SP
-        //         'telefone' => '0000-0000',
-        //         'email' => 'teste@gmail.com'
-        //     ],
-        //     1 => [
-        //         'nome' => 'Fornecedor 2',
-        //         'status' => 'S',
-        //         'cnpj' => null,
-        //         'ddd' => '85', // Fortaleza - CE
-        //         'telefone' => '0000-0000',
-        //     ],
-        //     2 => [
-        //         'nome' => 'Fornecedor 3',
-        //         'status' => 'S',
-        //         'cnpj' => '00.000.000/0000-00',
-        //         'ddd' => '32', // Juiz de Fora - MG
-        //         'telefone' => '0000-0000',
-        //     ]
-        // ];
-
-       // echo isset($fornecedores[0]['cnpj']) ? 'CNPJ informado' : $cnpj = 'CNPJ não informado';
-
-        // return view('app.fornecedor.index' , compact('fornecedores'));
     }
 
     public function listar() {
-        return view('app.fornecedor.listar');
+        $fornecedores = Fornecedor::where('nome', 'like', '%'.request('nome').'%')
+            ->where('site', 'like', '%'.request('site').'%')
+            ->where('uf', 'like', '%'.request('uf').'%')
+            ->where('email', 'like', '%'.request('email').'%')
+            ->get();
+
+        return view('app.fornecedor.listar' , ['fornecedores' => $fornecedores]);
     }
-    public function adicionar() {
-        return view('app.fornecedor.adicionar');
+
+    public function adicionar(Request $request) {
+
+        $msg = '';
+
+        if ($request->input('_token') != '' && $request->input('id') == '') {
+            // validação
+            $regra = [
+                'nome' => 'required|min:3|max:40',
+                'site' => 'required',
+                'uf' => 'required|size:2',
+                'email' => 'email'
+            ];
+            $mensagem = [
+                'required' => 'O campo :attribute é obrigatório',
+                'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
+                'nome.max' => 'O campo nome deve ter no máximo 40 caracteres',
+                'uf.size' => 'O campo uf deve ter 2 caracteres',
+                'email.email' => 'O campo email deve ser um email válido'
+            ];
+
+            $request->validate($regra, $mensagem);
+
+            // Salvar no banco de dados
+            $fornecedor = new Fornecedor();
+            $fornecedor->create($request->all());
+
+            $msg = 'Fornecedor cadastrado com sucesso!';
+        }
+
+        // Edição
+        if ($request->input('_token') != '' && $request->input('id') != '') {
+            $fornecedor = Fornecedor::find($request->input('id'));
+            $updare = $fornecedor->update($request->all());
+            if ($updare) {
+                $msg = 'Fornecedor editado com sucesso!';
+            } else {
+                $msg = 'Fornecedor não editado!';
+            }
+
+            return redirect()->route('app.fornecedor.adicionar', ['id' => $request->input('id'), 'msg' => $msg]);
+        }
+        return view('app.fornecedor.adicionar', ['msg' => $msg]);
+    }
+
+    public function editar($id, $msg = '') {
+        $fornecedor = Fornecedor::find($id);
+        if (isset($fornecedor->id)) {
+            return view('app.fornecedor.adicionar', ['fornecedor' => $fornecedor, 'msg' => $msg]);
+        } else {
+            return redirect()->route('app.fornecedor');
+        }
     }
 }
