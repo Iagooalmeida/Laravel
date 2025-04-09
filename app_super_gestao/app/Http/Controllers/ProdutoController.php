@@ -66,6 +66,7 @@ class ProdutoController extends Controller
     public function show(Produto $produto)
     {
         // Exibe um produto específico
+        return view('app.produto.show', ['produto' => $produto]);
     }
 
     /**
@@ -74,6 +75,8 @@ class ProdutoController extends Controller
     public function edit(Produto $produto)
     {
         // Exibe o formulário para editar um produto existente
+        $unidades = Unidade::all();
+        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades]);
     }
 
     /**
@@ -82,6 +85,8 @@ class ProdutoController extends Controller
     public function update(Request $request, Produto $produto)
     {
         // Atualiza um produto existente
+        $produto->update($request->all());
+        return redirect()->route('produto.show', ['produto' => $produto->id]);
     }
 
     /**
@@ -90,6 +95,8 @@ class ProdutoController extends Controller
     public function destroy(Produto $produto)
     {
         // Remove um produto existente
+        $produto->delete(); // Exclui o produto
+        return redirect()->route('produto.index'); // Redireciona para a lista de produtos
         // Exclui o produto do banco de dados
     }
 }
