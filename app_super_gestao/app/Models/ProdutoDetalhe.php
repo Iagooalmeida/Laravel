@@ -13,4 +13,12 @@ class ProdutoDetalhe extends Model
         'altura',
         'unidade_id'
     ];
+
+    public function produto()
+    {
+        return $this->belongsTo('App\Models\Produto');
+        // ProdutoDetalhe tem 1 produto
+        // 1 registro relacionado em produtos (pk) -> id
+        // 1 registro relacionado em produto_detalhes (fk) -> produto_id
+    }
 }
