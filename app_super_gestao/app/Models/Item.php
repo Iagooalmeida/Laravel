@@ -21,4 +21,10 @@ class Item extends Model
         // 1 registro relacionado em produto_detalhes (fk) -> produto_id
         // 1 registro relacionado em produtos (pk) -> id
     }
+
+    public function fornecedor()
+    {
+        return $this->belongsTo('App\Models\Fornecedor', 'fornecedor_id', 'id');
+
+    }
 }
