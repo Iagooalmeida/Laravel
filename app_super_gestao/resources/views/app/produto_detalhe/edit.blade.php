@@ -19,9 +19,9 @@
         <div class="informacao-pagina">
 
             <h4><strong></strong></h4>
-            <div><strong>Nome: </strong> {{ $produto_detalhe->produto->nome }}</div>
+            <div><strong>Nome: </strong> {{ $produto_detalhe->item->nome }}</div>
             <br>
-            <div> <strong>Descrição: </strong>{{ $produto_detalhe->produto->descricao}}</div>
+            <div> <strong>Descrição: </strong>{{ $produto_detalhe->item->descricao}}</div>
             <br>
 
             <div style="width: 30%; margin-left: auto; margin-right: auto;">
