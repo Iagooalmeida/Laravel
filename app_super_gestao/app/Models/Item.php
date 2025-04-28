@@ -11,7 +11,8 @@ class Item extends Model
         'nome',
         'descricao',
         'peso',
-        'unidade_id'
+        'unidade_id',
+        'fornecedor_id',
     ];
 
     public function itemDetalhe()
