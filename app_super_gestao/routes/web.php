@@ -25,8 +25,6 @@ Route::middleware('autenticacao:Padrao,Visitante')->prefix('/app')->group(functi
 
     Route::get('/sair', 'App\http\Controllers\LoginController@sair')->name('app.sair');
 
-    Route::get('/cliente', 'App\http\Controllers\ClienteController@index')->name('app.cliente');
-
     Route::get('/fornecedor', 'App\http\Controllers\FornecedorController@index')->name('app.fornecedor');
     Route::post('/fornecedor/listar', 'App\http\Controllers\FornecedorController@listar')->name('app.fornecedor.listar');
     Route::get('/fornecedor/listar', 'App\http\Controllers\FornecedorController@listar')->name('app.fornecedor.listar');
@@ -37,6 +35,11 @@ Route::middleware('autenticacao:Padrao,Visitante')->prefix('/app')->group(functi
 
     Route::resource('produto', 'App\http\Controllers\ProdutoController');
     Route::resource('produto-detalhe', 'App\http\Controllers\ProdutoDetalheController');
+
+    Route::resource('cliente', 'App\http\Controllers\ClienteController');
+    Route::resource('pedido', 'App\http\Controllers\PedidoController');
+    Route::resource('pedido-produto', 'App\http\Controllers\PedidoProdutoController');
+
 });
 
 Route::get('/teste/{p1}/{p2}', 'App\http\Controllers\TesteControler@teste')->name('teste');
